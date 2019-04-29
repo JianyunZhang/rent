@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>租户界面 </title>
+
+    <!-- Bootstrap -->
+    <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- NProgress -->
+    <link th:href="@{/vendors/nprogress/nprogress.css}" rel="stylesheet">
+    <!-- iCheck -->
+    <link th:href="@{/vendors/iCheck/skins/flat/green.css}" rel="stylesheet">
+
+    <!-- bootstrap-progressbar -->
+    <link th:href="@{/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css}" rel="stylesheet">
+    <!-- JQVMap -->
+    <link th:href="@{/vendors/jqvmap/dist/jqvmap.min.css}" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link th:href="@{/vendors/bootstrap-daterangepicker/daterangepicker.css}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link th:href="@{/build/css/custom.min.css}" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="/leaseholder" class="site_title"><i class="fa fa-home"></i> <span>浪子短租网</span></a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div class="profile clearfix">
+                    <div class="profile_pic">
+                        <img th:src="${session.leaseholder.icon}" alt="..." class="img-circle profile_img">
+                    </div>
+                    <div class="profile_info">
+                        <span>欢迎使用，租户</span>
+                        <h2 th:text="${session.leaseholder.name}"></h2>
+                    </div>
+                </div>
+                <!-- /menu profile quick info -->
+
+                <br />
+
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <h3>基础功能</h3>
+                        <ul class="nav side-menu">
+                            <li><a href="/leaseholder"><i class="fa fa-home"></i> 房屋总览 </a></li>
+
+                            <li><a href="/leaseholder_self_info"><i class="fa fa-cogs"></i> 个人信息 </a></li>
+                        </ul>
+                    </div>
+
+                    <div class="menu_section">
+                        <h3>租房管理</h3>
+                        <ul class="nav side-menu">
+                            <li><a href="/leaseholder_house_info"><i class="fa fa-home"></i> 房屋信息 </a></li>
+
+                            <li><a href="/leaseholder_order_info"><i class="fa fa-folder-open"></i> 个人订单 </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /sidebar menu -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <nav>
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="">
+                            <a href="javascript:" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <img th:src="${session.leaseholder.icon}" alt="" ><span th:text="${session.leaseholder.name}"></span>
+                                <span class=" fa fa-angle-down"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                <li><a href="/leaseholder_self_info"> 个人信息</a></li>
+
+                                <li><a href="/leaseholder_help"> 使用帮助</a></li>
+
+                                <li><a href="/index"><i class="fa fa-sign-out pull-right"></i> 注销登录</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3>房屋信息管理</h3>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>房屋信息详情</h2>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="x_content">
+
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+
+                                    <ul class="stats-overview">
+                                        <li>
+                                            <span class="name"> 房屋号 </span>
+                                            <span class="value text-success" th:text="${house.id}"></span>
+                                        </li>
+                                        <li>
+                                            <span class="name"> 发布日期 </span>
+                                            <span class="value text-success" th:text="${house.publishdate}"></span>
+                                        </li>
+                                        <li>
+                                            <span class="name"> 日租金 </span>
+                                            <span class="value text-success" th:text="|¥${house.price}|"></span>
+                                        </li>
+                                    </ul>
+                                    <br />
+                                    <img id="mainb" style="height:350px;" th:src="${house.picture}">
+
+                                </div>
+
+                                <!-- start project-detail sidebar -->
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+
+                                    <section class="panel">
+
+
+                                        <div class="panel-body">
+                                            <div th:if="${house.ischeck == true}">
+                                                <h3 class="green"><i class="fa fa-check"></i> 已认证的房屋信息 </h3>
+                                                <p>该房屋信息经管理员审核并通过。</p>
+                                            </div>
+                                            <div th:if="${house.ischeck == false}">
+                                                <h3 class="red"><i class="fa fa-times"></i> 未认证的房屋信息 </h3>
+                                                <p>该房屋信息未经管理员审核或审核未通过。</p>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="project_detail">
+                                                <p class="title">房屋名称</p>
+                                                <p th:text="${house.name}"></p>
+                                                <p class="title">发布人</p>
+                                                <p th:text="${house.landlord}"></p>
+                                                <p class="title">地址</p>
+                                                <p th:text="${house.location}"></p>
+                                                <p class="title">类型</p>
+                                                <p th:text="${house.category}"></p>
+                                                <p class="title">面积</p>
+                                                <p th:text="|${house.area}㎡|"></p>
+                                                <p class="title">楼层</p>
+                                                <p th:text="${house.floor}"></p>
+                                                <p class="title">审核状态</p>
+                                                <p th:if="${house.ischeck == true}">已通过管理员审核</p>
+                                                <p th:if="${house.ischeck == false}">未通过管理员审核</p>
+                                                <p class="title">租用状态</p>
+                                                <p th:if="${house.islease == true}">当前未被租用</p>
+                                                <p th:if="${house.islease == false}">当前已被租用</p>
+                                            </div>
+
+                                            <div class="text-center mtop20">
+                                                <a href="/leaseholder_house_info" class="btn btn-sm btn-primary">返回</a>
+                                                <a th:href="@{/leaseholderShowHouseOrder(id=${house.id})}" class="btn btn-sm btn-success">租用</a>
+                                            </div>
+                                        </div>
+
+                                    </section>
+
+                                </div>
+                                <!-- end project-detail sidebar -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                浪子短租网 - 南昌航空大学软酷实训
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+<!-- FastClick -->
+<script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+<!-- NProgress -->
+<script th:src="@{/vendors/nprogress/nprogress.js}"></script>
+<!-- Chart.js -->
+<script th:src="@{/vendors/Chart.js/dist/Chart.min.js}"></script>
+<!-- gauge.js -->
+<script th:src="@{/vendors/gauge.js/dist/gauge.min.js}"></script>
+<!-- bootstrap-progressbar -->
+<script th:src="@{/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
+<!-- iCheck -->
+<script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
+<!-- Skycons -->
+<script th:src="@{/vendors/skycons/skycons.js}"></script>
+<!-- Flot -->
+<script th:src="@{/vendors/Flot/jquery.flot.js}"></script>
+<script th:src="@{/vendors/Flot/jquery.flot.pie.js}"></script>
+<script th:src="@{/vendors/Flot/jquery.flot.time.js}"></script>
+<script th:src="@{/vendors/Flot/jquery.flot.stack.js}"></script>
+<script th:src="@{/vendors/Flot/jquery.flot.resize.js}"></script>
+<!-- Flot plugins -->
+<script th:src="@{/vendors/flot.orderbars/js/jquery.flot.orderBars.js}"></script>
+<script th:src="@{/vendors/flot-spline/js/jquery.flot.spline.min.js}"></script>
+<script th:src="@{/vendors/flot.curvedlines/curvedLines.js}"></script>
+<!-- DateJS -->
+<script th:src="@{/vendors/DateJS/build/date.js}"></script>
+<!-- JQVMap -->
+<script th:src="@{/vendors/jqvmap/dist/jquery.vmap.js}"></script>
+<script th:src="@{/vendors/jqvmap/dist/maps/jquery.vmap.world.js}"></script>
+<script th:src="@{/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js}"></script>
+<!-- bootstrap-daterangepicker -->
+<script th:src="@{/vendors/moment/min/moment.min.js}"></script>
+<script th:src="@{/vendors/bootstrap-daterangepicker/daterangepicker.js}"></script>
+
+<!-- Custom Theme Scripts -->
+<script th:src="@{/build/js/custom.min.js}"></script>
+
+</body>
+</html>
